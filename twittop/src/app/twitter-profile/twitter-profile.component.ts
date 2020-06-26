@@ -30,7 +30,7 @@ export class TwitterProfileComponent implements OnInit {
     userProfile.time_zone = 1;
 
     console.log(userProfile);
-  //  this.getAnalyze(userProfile);
+    this.getAnalyze(userProfile);
     this.flaskServer.testServer().then(response => {
       console.log(response);
     });
