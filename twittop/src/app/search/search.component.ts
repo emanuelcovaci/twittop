@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -8,7 +9,7 @@ import {Component, OnInit} from '@angular/core';
 export class SearchComponent implements OnInit {
   public username = '';
 
-  constructor() {
+  constructor(private route: Router) {
   }
 
   ngOnInit(): void {
@@ -17,6 +18,7 @@ export class SearchComponent implements OnInit {
 
   onClickGo() {
     console.log(this.username);
+    this.route.navigate(['/twitter-profile/'+this.username, ]);
   }
 
 }

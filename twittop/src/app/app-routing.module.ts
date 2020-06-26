@@ -7,7 +7,8 @@ import {TwitterProfileComponent} from './twitter-profile/twitter-profile.compone
 
 const routes: Routes = [
   {path: '', component: SearchComponent},
-  {path: 'twitter-profile', component: TwitterProfileComponent},
+  {path: 'twitter-profile/:username', component: TwitterProfileComponent},
+  { path: '**', component: SearchComponent }
 ];
 
 @NgModule({

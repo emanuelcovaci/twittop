@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {TwitterService} from '../shared/twitter.service';
 import {FlaskServerService} from "../shared/flask-server.service";
 
@@ -12,9 +13,11 @@ import {UserProfile} from "../shared/flask-server.service";
 })
 export class TwitterProfileComponent implements OnInit {
 
+  public username: string = '';
 
   constructor(private twitterService: TwitterService,
-              private flaskServer: FlaskServerService) {
+              private flaskServer: FlaskServerService,
+              private route: ActivatedRoute) {
     this.getData();
   }
 
@@ -30,6 +33,8 @@ export class TwitterProfileComponent implements OnInit {
     userProfile.time_zone = 1;
 
     console.log(userProfile);
+    this.username = this.route.snapshot.paramMap.get('username');
+    console.log(this.username);
     this.getAnalyze(userProfile);
     this.flaskServer.testServer().then(response => {
       console.log(response);
