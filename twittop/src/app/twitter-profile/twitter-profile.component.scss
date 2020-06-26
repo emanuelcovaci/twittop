@@ -1,0 +1,33 @@
+.twitter-profile{
+  margin-left: 40px;
+  width: 400px;
+  hight:200px;
+}
+.raport{
+  margin-left: 20px;
+  width: 100px;
+  hight:100px;
+}
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+}
+
+.status-account{
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.img-raport{
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}

@@ -1,1 +1,55 @@
-<p>twitter-profile works!</p>
+<div class="row">
+
+
+  <div class="twitter-profile column">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <img mat-card-avatar src={{profile_img}}>
+        <mat-card-title>@{{this.username}}</mat-card-title>
+        <mat-card-subtitle>{{this.name}}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src={{profile_bg_img}} alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <p>
+          {{this.description}}
+        </p>
+        <div>
+          <mat-icon aria-hidden="false" aria-label="Example home icon">calendar_today</mat-icon>
+          Joined {{ this.created_at }}
+        </div>
+
+        <div [hidden]="!location">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">location_on</mat-icon>
+          {{ this.location }}
+        </div>
+
+        <div>
+          <mat-icon aria-hidden="false" aria-label="Example home icon">assessment</mat-icon>
+          {{ this.userProfile.followers_count }} Followers, {{ this.userProfile.friends_count}} Following
+
+        </div>
+
+
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>LIKE</button>
+        <button mat-button>SHARE</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="raport column">
+    <mat-card class="example-card">
+      <img mat-card-image class="img-raport" src={{this.result_img}} alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <div>
+        <h1>{{this.report_message}}</h1>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+
+  </div>
+
+</div>

@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TwitterService} from '../shared/twitter.service';
 import {FlaskServerService} from "../shared/flask-server.service";
 
 import {UserProfile} from "../shared/flask-server.service";
+import * as moment from 'moment';
 
 
 @Component({
@@ -11,10 +12,20 @@ import {UserProfile} from "../shared/flask-server.service";
   templateUrl: './twitter-profile.component.html',
   styleUrls: ['./twitter-profile.component.scss']
 })
-export class TwitterProfileComponent implements OnInit {
+export class TwitterProfileComponent implements OnInit, OnDestroy {
 
   public username: string = '';
   public userProfile: UserProfile = {};
+
+  public name: string = '';
+  public profile_img: string = '';
+  public profile_bg_img: string = '';
+  public description: string = '';
+  public created_at: any;
+  public location: any = null;
+  public fake: boolean = null;
+  public result_img: string = '';
+  public report_message: string = '';
 
   constructor(private twitterService: TwitterService,
               private flaskServer: FlaskServerService,
@@ -35,6 +46,22 @@ export class TwitterProfileComponent implements OnInit {
 
   }
 
+  ngOnDestroy() {
+    this.username = '';
+    this.userProfile = {};
+
+    this.name = '';
+    this.profile_img = '';
+    this.profile_bg_img = '';
+    this.description = '';
+    this.created_at = '';
+    this.location = null;
+    this.fake = null;
+    this.result_img = '';
+    this.report_message = '';
+
+  }
+
   async getData(username: string) {
     const profile: any = await this.twitterService.getUserProfile(username);
 
@@ -44,12 +71,12 @@ export class TwitterProfileComponent implements OnInit {
     this.userProfile.friends_count = profile.friends_count;
     this.userProfile.favourites_count = profile.favourites_count;
     this.userProfile.listed_count = profile.listed_count;
-    if (profile.url = !null) {
+    if (profile.url !== null) {
       this.userProfile.url = 1;
     } else {
       this.userProfile.url = 0;
     }
-    if (profile.time_zone = !null) {
+    if (profile.time_zone !== null || profile.location !== '') {
       this.userProfile.time_zone = 1;
     } else {
       this.userProfile.time_zone = 0;
@@ -57,11 +84,29 @@ export class TwitterProfileComponent implements OnInit {
     console.log("----");
     console.log(this.userProfile);
 
+    this.name = profile.name;
+    this.profile_img = profile.profile_image_url_https;
+    this.profile_bg_img = profile.profile_banner_url;
+    this.description = profile.description;
+    this.created_at = moment(profile.created_at, 'dd MMM DD HH:mm:ss ZZ YYYY', 'en');
+    this.created_at = moment(this.created_at, "YYYYMMDD").fromNow();
+    this.location = profile.location;
+
+
   }
 
   async getAnalyze(userProfile) {
     this.flaskServer.analyze(userProfile).then((response) => {
       console.log(response);
+      this.fake = response.fake;
+      if (this.fake === true) {
+        this.result_img = '../../assets/fake.svg';
+        this.report_message = 'From our report this account is FAKE.';
+
+      } else {
+        this.result_img = '../../assets/real.svg';
+        this.report_message = 'From our report this account is genuine.';
+      }
     });
   }
 
