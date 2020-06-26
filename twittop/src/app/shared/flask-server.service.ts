@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 
-export interface UserProfile {
+export class UserProfile {
   statuses_count: number;
   followers_count: number;
   friends_count: number;
@@ -9,6 +9,16 @@ export interface UserProfile {
   listed_count: number;
   url: number;
   time_zone: number;
+
+  UserProfile(statuses_count = 0, followers_count = 0, friends_count = 0, favourites_count = 0, listed_count = 0, url = 0, time_zone = 0) {
+    this.statuses_count = statuses_count;
+    this.followers_count = followers_count;
+    this.friends_count = friends_count;
+    this.favourites_count = favourites_count;
+    this.listed_count = listed_count;
+    this.url = url;
+    this.time_zone = time_zone;
+  }
 
 }
 

@@ -15,7 +15,7 @@ import * as moment from 'moment';
 export class TwitterProfileComponent implements OnInit, OnDestroy {
 
   public username: string = '';
-  public userProfile: UserProfile = {};
+  public userProfile: UserProfile = new UserProfile();
 
   public name: string = '';
   public profile_img: string = '';
@@ -26,6 +26,7 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
   public fake: boolean = null;
   public result_img: string = '';
   public report_message: string = '';
+  public verified: boolean = false;
 
   constructor(private twitterService: TwitterService,
               private flaskServer: FlaskServerService,
@@ -35,7 +36,13 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
     this.getData(this.username).finally(() => {
       console.log(this.userProfile);
 
-      this.getAnalyze(this.userProfile);
+      if (this.verified == false) {
+        this.getAnalyze(this.userProfile);
+      } else {
+        this.result_img = '../../assets/real.svg';
+        this.report_message = 'From our report this account is genuine.';
+      }
+
     });
 
 
@@ -48,7 +55,7 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.username = '';
-    this.userProfile = {};
+    delete this.userProfile;
 
     this.name = '';
     this.profile_img = '';
@@ -91,6 +98,7 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
     this.created_at = moment(profile.created_at, 'dd MMM DD HH:mm:ss ZZ YYYY', 'en');
     this.created_at = moment(this.created_at, "YYYYMMDD").fromNow();
     this.location = profile.location;
+    this.verified = profile.verified;
 
 
   }

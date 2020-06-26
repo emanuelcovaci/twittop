@@ -12,7 +12,6 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 CORS(app)
 
 
-
 @app.route('/test')
 def index():
     data_response = {
@@ -37,28 +36,45 @@ def analyze_profile():
         'time_zone': user_profile['time_zone']
     }
 
-    df_user_prediction = pd.DataFrame(user_prediction, columns = ['statuses_count', 'followers_count', 'friends_count',
-                                                         'favourites_count', 'listed_count', 'url', 'time_zone'], index=[0])
+    df_user_prediction = pd.DataFrame(user_prediction, columns=['statuses_count', 'followers_count', 'friends_count',
+                                                                'favourites_count', 'listed_count', 'url', 'time_zone'],
+                                      index=[0])
 
     print (df_user_prediction)
 
     df_user_prediction = df_user_prediction.astype(np.float64)
 
-
-
-    model = load_model('../machine_learning/Dataset/model_twitter2.hdf5')
+    model = load_model('../machine_learning/Dataset/model_twitter.hdf5')
     model.summary()
     prediction = model.predict(df_user_prediction)
-    print (prediction)
-    fake = True
-    print(prediction.item(0))
-    if prediction.item(0) == -1.0:
+    print ('Prediction:' + str(prediction))
+    print ('---'*10)
+    print (prediction.item(0))
+
+    prediction_value = prediction.item(0)
+    fake = False
+    if prediction_value == -1.0:
+        print ('it is -1.0')
         fake = False
+    if prediction_value != -1.0:
+        print ('is not -1.0')
+        fake = True
+
+    del model
+    tf.keras.backend.clear_session()
+
+    count = 0
+    for key in user_prediction:
+        if (user_prediction[key] == 0):
+            count = count + 1
+    if count > 5:
+        fake = True
+    print ('count:'+str(count))
+    del user_prediction
+    del df_user_prediction
     data_response = {
-        'data': prediction.item(0),
         'fake': fake
     }
-    del model
-    del user_prediction
-    tf.keras.backend.clear_session()
+    print(data_response)
+
     return data_response
