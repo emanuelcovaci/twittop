@@ -37,12 +37,14 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
