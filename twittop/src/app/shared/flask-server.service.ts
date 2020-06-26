@@ -22,6 +22,9 @@ export class FlaskServerService {
   }
 
   analyze(userProfile: UserProfile) {
+    console.log("from service");
+    console.log(userProfile);
+    console.log("end service");
     return this.http.post<UserProfile>(this.ip + '/analyze_profile', {
       userProfile
     }).toPromise().then(response => {

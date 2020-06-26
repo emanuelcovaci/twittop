@@ -20,7 +20,7 @@ export class TwitterService {
   getUserProfile(username: string) {
     return new Promise(resolve => {
       this.http.get(`http://localhost:7890/1.1/users/show.json?screen_name=${username}`).subscribe(data => {
-        resolve((data as Array<any>));
+        resolve((data));
       });
     });
   }

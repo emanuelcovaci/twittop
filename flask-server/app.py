@@ -40,6 +40,7 @@ def index():
 def analyze_profile():
     req_data = request.get_json()
     user_profile = req_data['userProfile']
+    print (user_profile)
 
     user_prediction = {
         'statuses_count': user_profile['statuses_count'],
@@ -60,9 +61,9 @@ def analyze_profile():
 
 
 
-    model = load_model('../machine_learning/Dataset/model_twitter.hdf5')
+    model = load_model('../machine_learning/Dataset/model_twitter2.hdf5')
     model.summary()
-    prediction = model.predict(df_user_prediction).T[0]
+    prediction = model.predict(df_user_prediction)
     print (prediction)
     fake = True
     print(prediction.item(0))
