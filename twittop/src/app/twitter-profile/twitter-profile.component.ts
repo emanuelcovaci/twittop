@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {TwitterService} from '../shared/twitter.service';
+
 
 @Component({
   selector: 'app-twitter-profile',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TwitterProfileComponent implements OnInit {
 
-  constructor() { }
+  constructor(private twitterService: TwitterService) {
+
+    this.getData();
+  }
 
   ngOnInit(): void {
+  }
+
+  async getData() {
+    const profile: any = await this.twitterService.getUserProfile('elonmusk');
+
+    console.log(profile);
+
   }
 
 }

@@ -41,6 +41,10 @@ import { FooterComponent } from './footer/footer.component';
 import { SearchComponent } from './search/search.component';
 import { TwitterProfileComponent } from './twitter-profile/twitter-profile.component';
 
+import {TwitterService} from "./shared/twitter.service";
+
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -84,9 +88,10 @@ import { TwitterProfileComponent } from './twitter-profile/twitter-profile.compo
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [TwitterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
