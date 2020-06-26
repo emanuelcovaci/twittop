@@ -21,7 +21,9 @@
     "@angular/platform-browser": "~9.1.9",
     "@angular/platform-browser-dynamic": "~9.1.9",
     "@angular/router": "~9.1.9",
+    "@tensorflow/tfjs": "^2.0.1",
     "rxjs": "~6.5.4",
+    "save": "^2.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },

@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {TwitterService} from '../shared/twitter.service';
 
+import * as tf from '@tensorflow/tfjs';
+
 
 @Component({
   selector: 'app-twitter-profile',
@@ -9,8 +11,9 @@ import {TwitterService} from '../shared/twitter.service';
 })
 export class TwitterProfileComponent implements OnInit {
 
-  constructor(private twitterService: TwitterService) {
 
+  constructor(private twitterService: TwitterService) {
+    const model = tf.loadLayersModel('../assets/ml_model/model.json');
     this.getData();
   }
 
