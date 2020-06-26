@@ -39,13 +39,15 @@ import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { SearchComponent } from './search/search.component';
+import { TwitterProfileComponent } from './twitter-profile/twitter-profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     FooterComponent,
-    SearchComponent
+    SearchComponent,
+    TwitterProfileComponent
   ],
   imports: [
     BrowserModule,
