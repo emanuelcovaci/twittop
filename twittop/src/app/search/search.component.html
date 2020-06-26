@@ -8,14 +8,14 @@
     </div>
 
     <div>
-      <form class="example-form">
+      <div class="example-form">
         <mat-form-field class="example-full-width">
           <mat-label>Twitter username</mat-label>
-          <input  matInput>
+          <input  matInput [(ngModel)]="username" >
         </mat-form-field>
-      </form>
+      </div>
       <div class="button-center">
-        <button mat-raised-button color="accent">Go</button>
+        <button mat-raised-button color="accent" (click)="onClickGo()">Go</button>
       </div>
 
     </div>
