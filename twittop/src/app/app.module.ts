@@ -42,6 +42,7 @@ import { SearchComponent } from './search/search.component';
 import { TwitterProfileComponent } from './twitter-profile/twitter-profile.component';
 
 import {TwitterService} from "./shared/twitter.service";
+import {FlaskServerService} from "./shared/flask-server.service";
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -91,7 +92,7 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule
   ],
-  providers: [TwitterService],
+  providers: [TwitterService, FlaskServerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
