@@ -2,9 +2,13 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TwitterService} from '../shared/twitter.service';
 import {FlaskServerService} from "../shared/flask-server.service";
+import {ReportDialogComponent} from "./report-dialog/report-dialog.component";
+
 
 import {UserProfile} from "../shared/flask-server.service";
 import * as moment from 'moment';
+import {MatDialog} from "@angular/material/dialog";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -29,10 +33,13 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
   public report_message: string = '';
   public verified: boolean = false;
   public userTweets: Array<any>;
+  public stringValue: string = 'Fake';
 
   constructor(private twitterService: TwitterService,
               private flaskServer: FlaskServerService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private dialog: MatDialog,
+              private snackBar: MatSnackBar) {
     this.username = this.route.snapshot.paramMap.get('username');
     console.log(this.username);
     this.getData(this.username).finally(() => {
@@ -43,6 +50,7 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
       } else {
         this.result_img = '../../assets/real.svg';
         this.report_message = 'From our report this account is genuine.';
+        this.stringValue = 'REAL';
       }
 
     });
@@ -113,10 +121,12 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
       if (this.fake === true) {
         this.result_img = '../../assets/fake.svg';
         this.report_message = 'From our report this account is FAKE.';
+        this.stringValue = 'FAKE';
 
       } else {
         this.result_img = '../../assets/real.svg';
         this.report_message = 'From our report this account is genuine.';
+        this.stringValue = 'REAL';
       }
     });
   }
@@ -128,6 +138,35 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
     this.userTweets = await this.twitterService.getTweets(numberOfTweets, this.username);
 
     console.log(this.userTweets);
+  }
+
+  openDialog() {
+    setTimeout(() => {
+      const dialogRef = this.dialog.open(ReportDialogComponent, {
+        data: {
+          message: 'Are you really sure that ' + this.username + ' it\'s not a  ' + this.stringValue + ' twitter account?',
+          buttonText: {
+            ok: 'Save',
+            cancel: 'No'
+          }
+        }
+      });
+      const snack = this.snackBar.open('Send your feedback');
+
+      dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+        if (confirmed) {
+          snack.dismiss();
+          const a = document.createElement('a');
+          a.click();
+          a.remove();
+          snack.dismiss();
+          this.snackBar.open('Thank you for your feedback. We will use your feedback for future improvement.', 'Hide', {
+            duration: 3000,
+          });
+        }
+      });
+    }, 0);
+
   }
 
 

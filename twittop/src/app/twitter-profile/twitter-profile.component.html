@@ -41,10 +41,28 @@
 
   <div class="raport column">
     <mat-card class="example-card">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button (click)="openDialog()" mat-menu-item>
+          <mat-icon>feedback</mat-icon>
+          <span >Send feedback</span>
+        </button>
+      </mat-menu>
       <img mat-card-image class="img-raport" src={{this.result_img}} alt="Photo of a Shiba Inu">
       <mat-card-content>
         <div>
           <h1>{{this.report_message}}</h1>
+        </div>
+        <div *ngIf="this.report_message!= ''">
+          <div id="image" style="display:inline;">
+            <img src='../../assets/feedback.svg' style="width: 35px"/>
+          </div>
+
+          <div id="texts" style="display:inline; white-space:nowrap;">
+            Do you think that {{this.username}} is not a {{this.stringValue}} twitter account ? Click on menu and send us your feedback.
+          </div>
         </div>
       </mat-card-content>
     </mat-card>

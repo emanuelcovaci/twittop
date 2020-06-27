@@ -46,6 +46,7 @@ import {FlaskServerService} from "./shared/flask-server.service";
 
 import { HttpClientModule } from '@angular/common/http';
 import { NgxMasonryModule } from 'ngx-masonry';
+import {ReportDialogComponent} from "./twitter-profile/report-dialog/report-dialog.component";
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { NgxMasonryModule } from 'ngx-masonry';
     NavbarComponent,
     FooterComponent,
     SearchComponent,
-    TwitterProfileComponent
+    TwitterProfileComponent,
+    ReportDialogComponent
   ],
   imports: [
     BrowserModule,
