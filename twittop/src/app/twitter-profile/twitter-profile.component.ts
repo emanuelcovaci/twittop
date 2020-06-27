@@ -151,7 +151,7 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
         data: {
           message: 'Are you really sure that ' + this.username + ' it\'s not a  ' + this.stringValue + ' twitter account?',
           buttonText: {
-            ok: 'Save',
+            ok: 'Yes, I\'m sure',
             cancel: 'No'
           }
         }
