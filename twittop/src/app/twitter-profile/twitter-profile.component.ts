@@ -25,7 +25,7 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
   public created_at: any;
   public location: any = null;
   public fake: boolean = null;
-  public result_img: string = '';
+  public result_img: string = '../../assets/loading2.gif';
   public report_message: string = '';
   public verified: boolean = false;
   public userTweets: Array<any>;
@@ -123,7 +123,7 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
 
   async loadTweets() {
     this.tweetRows = [];
-    const numberOfTweets = 30;
+    const numberOfTweets = 50;
 
     this.userTweets = await this.twitterService.getTweets(numberOfTweets, this.username);
 

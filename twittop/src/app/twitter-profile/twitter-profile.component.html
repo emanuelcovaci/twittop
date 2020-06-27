@@ -9,7 +9,7 @@
         <mat-card-title>@{{this.username}}</mat-card-title>
         <mat-card-subtitle>{{this.name}}</mat-card-subtitle>
       </mat-card-header>
-      <img mat-card-image src={{profile_bg_img}} alt="Photo of a Shiba Inu">
+      <img *ngIf="profile_bg_img" mat-card-image src={{profile_bg_img}} alt="Photo of a Shiba Inu">
       <mat-card-content>
         <p>
           {{this.description}}
