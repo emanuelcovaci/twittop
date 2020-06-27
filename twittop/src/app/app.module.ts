@@ -45,6 +45,8 @@ import {TwitterService} from "./shared/twitter.service";
 import {FlaskServerService} from "./shared/flask-server.service";
 
 import { HttpClientModule } from '@angular/common/http';
+import { NgxMasonryModule } from 'ngx-masonry';
+
 
 @NgModule({
   declarations: [
@@ -90,7 +92,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatSortModule,
     MatPaginatorModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxMasonryModule
   ],
   providers: [TwitterService, FlaskServerService],
   bootstrap: [AppComponent]

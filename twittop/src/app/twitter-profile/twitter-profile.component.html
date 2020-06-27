@@ -44,7 +44,7 @@
       <img mat-card-image class="img-raport" src={{this.result_img}} alt="Photo of a Shiba Inu">
       <mat-card-content>
         <div>
-        <h1>{{this.report_message}}</h1>
+          <h1>{{this.report_message}}</h1>
         </div>
       </mat-card-content>
     </mat-card>
@@ -53,3 +53,29 @@
   </div>
 
 </div>
+
+
+<ngx-masonry *ngIf="userTweets.length>=1">
+  <div ngxMasonryItem class="masonry-item" *ngFor="let item of userTweets">
+    <mat-card>
+      <mat-card-header>
+        <img mat-card-avatar src={{profile_img}}>
+        <mat-card-title>@{{this.username}}</mat-card-title>
+        <mat-card-subtitle>{{this.name}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div>
+          {{item.text}}
+        </div>
+        <div> {{ item.created_at | date }}</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</ngx-masonry>
+
+
+
+
+
+
+

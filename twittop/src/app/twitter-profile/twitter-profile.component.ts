@@ -16,6 +16,7 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
 
   public username: string = '';
   public userProfile: UserProfile = new UserProfile();
+  public tweetRows: Array<any> = [];
 
   public name: string = '';
   public profile_img: string = '';
@@ -27,6 +28,7 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
   public result_img: string = '';
   public report_message: string = '';
   public verified: boolean = false;
+  public userTweets: Array<any>;
 
   constructor(private twitterService: TwitterService,
               private flaskServer: FlaskServerService,
@@ -45,11 +47,12 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
 
     });
 
+    this.loadTweets();
+
 
   }
 
   ngOnInit(): void {
-
 
   }
 
@@ -117,5 +120,15 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  async loadTweets() {
+    this.tweetRows = [];
+    const numberOfTweets = 30;
+
+    this.userTweets = await this.twitterService.getTweets(numberOfTweets, this.username);
+
+    console.log(this.userTweets);
+  }
+
 
 }
