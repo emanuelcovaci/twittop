@@ -6,6 +6,7 @@ import numpy as np
 from flask_cors import CORS, cross_origin
 from flask import request
 import gc
+import json
 
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -48,7 +49,7 @@ def analyze_profile():
     model.summary()
     prediction = model.predict(df_user_prediction)
     print ('Prediction:' + str(prediction))
-    print ('---'*10)
+    print ('---' * 10)
     print (prediction.item(0))
 
     prediction_value = prediction.item(0)
@@ -69,7 +70,7 @@ def analyze_profile():
             count = count + 1
     if count > 5:
         fake = True
-    print ('count:'+str(count))
+    print ('count:' + str(count))
     del user_prediction
     del df_user_prediction
     data_response = {
@@ -77,4 +78,19 @@ def analyze_profile():
     }
     print(data_response)
 
+    return data_response
+
+
+@app.route('/send_feedback', methods=['GET', 'POST'])
+def send_feedback():
+    req_data = request.get_json()
+    profile = req_data['profile']
+    profile_data = profile['profile_data']
+    username = profile_data['screen_name']
+    data_response = {
+        'message': 'Your feedback was recorded!',
+    }
+    filename = username + '.json'
+    with open('user_feedback/' + filename, 'w') as outfile:
+        json.dump(req_data, outfile)
     return data_response

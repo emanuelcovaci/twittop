@@ -1,15 +1,17 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TwitterService} from '../shared/twitter.service';
-import {FlaskServerService} from "../shared/flask-server.service";
-import {ReportDialogComponent} from "./report-dialog/report-dialog.component";
+import {FlaskServerService} from '../shared/flask-server.service';
+import {ReportDialogComponent} from './report-dialog/report-dialog.component';
 
 
-import {UserProfile} from "../shared/flask-server.service";
+import {UserProfile} from '../shared/flask-server.service';
 import * as moment from 'moment';
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {FsService} from 'ngx-fs';
 
+declare var fs: any;
 
 @Component({
   selector: 'app-twitter-profile',
@@ -18,28 +20,30 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class TwitterProfileComponent implements OnInit, OnDestroy {
 
-  public username: string = '';
+  public username = '';
   public userProfile: UserProfile = new UserProfile();
   public tweetRows: Array<any> = [];
 
-  public name: string = '';
-  public profile_img: string = '';
-  public profile_bg_img: string = '';
-  public description: string = '';
+  public name = '';
+  public profile_img = '';
+  public profile_bg_img = '';
+  public description = '';
   public created_at: any;
   public location: any = null;
   public fake: boolean = null;
-  public result_img: string = '../../assets/loading2.gif';
-  public report_message: string = '';
-  public verified: boolean = false;
+  public result_img = '../../assets/loading2.gif';
+  public report_message = '';
+  public verified = false;
   public userTweets: Array<any>;
-  public stringValue: string = 'Fake';
+  public stringValue = 'Fake';
+  public profileDataAll: any = null;
 
   constructor(private twitterService: TwitterService,
               private flaskServer: FlaskServerService,
               private route: ActivatedRoute,
               private dialog: MatDialog,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private fsService: FsService) {
     this.username = this.route.snapshot.paramMap.get('username');
     console.log(this.username);
     this.getData(this.username).finally(() => {
@@ -84,6 +88,7 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
     const profile: any = await this.twitterService.getUserProfile(username);
 
     console.log(profile);
+    this.profileDataAll = profile;
     this.userProfile.statuses_count = profile.statuses_count;
     this.userProfile.followers_count = profile.followers_count;
     this.userProfile.friends_count = profile.friends_count;
@@ -99,7 +104,7 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
     } else {
       this.userProfile.time_zone = 0;
     }
-    console.log("----");
+    console.log('----');
     console.log(this.userProfile);
 
     this.name = profile.name;
@@ -107,7 +112,7 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
     this.profile_bg_img = profile.profile_banner_url;
     this.description = profile.description;
     this.created_at = moment(profile.created_at, 'dd MMM DD HH:mm:ss ZZ YYYY', 'en');
-    this.created_at = moment(this.created_at, "YYYYMMDD").fromNow();
+    this.created_at = moment(this.created_at, 'YYYYMMDD').fromNow();
     this.location = profile.location;
     this.verified = profile.verified;
 
@@ -155,6 +160,15 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
 
       dialogRef.afterClosed().subscribe((confirmed: boolean) => {
         if (confirmed) {
+          let send_feedback = {
+            profile_data: this.profileDataAll,
+            username: this.username,
+            prediction: this.stringValue,
+            user_prediction: !this.fake
+          };
+          this.flaskServer.sendFeedback(send_feedback).then((data) => {
+            console.log(data);
+          });
           snack.dismiss();
           const a = document.createElement('a');
           a.click();

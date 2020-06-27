@@ -52,4 +52,14 @@ export class FlaskServerService {
     });
   }
 
+  sendFeedback(profile: any) {
+    return this.http.post(this.ip + '/send_feedback', {
+      profile
+    }).toPromise().then(response => {
+      return response;
+    }).catch(err => {
+      return err;
+    });
+  }
+
 }

@@ -24,6 +24,7 @@
     "@tensorflow/tfjs": "^2.0.1",
     "masonry-layout": "^4.2.2",
     "moment": "^2.27.0",
+    "ngx-fs": "0.0.1",
     "ngx-masonry": "^9.2.0",
     "rxjs": "~6.5.4",
     "save": "^2.4.0",
