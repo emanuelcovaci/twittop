@@ -37,6 +37,7 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
   public userTweets: Array<any>;
   public stringValue = 'Fake';
   public profileDataAll: any = null;
+  public profileLink: string = '';
 
   constructor(private twitterService: TwitterService,
               private flaskServer: FlaskServerService,
@@ -115,6 +116,7 @@ export class TwitterProfileComponent implements OnInit, OnDestroy {
     this.created_at = moment(this.created_at, 'YYYYMMDD').fromNow();
     this.location = profile.location;
     this.verified = profile.verified;
+    this.profileLink = 'https://twitter.com/' + this.username;
 
 
   }
