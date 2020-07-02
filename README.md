@@ -1,7 +1,7 @@
 # twittop
 # Detecting Fake Accounts on Social Media
 
-#Twittop is an online application that uses artificial intelligence to detect if a social media account is fake.
+Twittop is an online application that uses artificial intelligence to detect if a social media account is fake.
 
 ![Search page](https://user-images.githubusercontent.com/11509775/85924989-6a8a1800-b89e-11ea-80c1-50ec4d431bcf.png)
 
